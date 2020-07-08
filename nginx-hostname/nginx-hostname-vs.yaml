@@ -1,0 +1,33 @@
+apiVersion: k8s.nginx.org/v1
+kind: VirtualServer
+metadata:
+  name: test
+  namespace: moodle
+spec:
+  host: hadtech-platform.tk
+  tls:
+    secret: moodle-tls
+  upstreams:
+  - name: moodle
+    service: moodle
+    port: 80
+  routes:
+  - path: /
+    action:
+      pass: moodle
+---
+#apiVersion: k8s.nginx.org/v1
+#kind: VirtualServer
+#metadata:
+#  name: test-1
+#  namespace: monitoring
+#spec:
+#  host: monitor.hadtech-platform.tk
+#  upstreams:
+#  - name: grafana
+#    service: grafana
+#    port: 3000
+#  routes:
+#  - path: /
+#    action:
+#      pass: grafana
